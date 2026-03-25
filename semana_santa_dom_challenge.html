@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semana Santa DOM Challenge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: 0.3s;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .dark {
+      background: #111;
+      color: #eee;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    ul li {
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    #moverBtn {
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🕯️ Semana Santa DOM Challenge 🕯️</h1>
+  <button id="darkMode">🌙 Modo oscuro</button>
+</header>
+
+<div class="container">
+
+  <!-- 1 TEXT -->
+  <section>
+    <h2 id="title">Reto DOM Semana Santa</h2>
+    <button id="changeText">Cambiar texto</button>
+  </section>
+
+  <!-- 2 COLOR -->
+  <section>
+    <h2>Cambiar fondo</h2>
+    <button onclick="document.body.style.background='white'">Blanco</button>
+    <button onclick="document.body.style.background='lightgray'">Gris</button>
+    <button onclick="document.body.style.background='beige'">Beige</button>
+  </section>
+
+  <!-- 3 COUNTER -->
+  <section>
+    <h2>Contador</h2>
+    <p id="count">0</p>
+    <button id="btnCount">+1</button>
+  </section>
+
+  <!-- 4 TOGGLE -->
+  <section>
+    <h2>Mostrar / Ocultar</h2>
+    <p id="text">👤 Nazareno en procesión</p>
+    <button id="toggle">Toggle</button>
+  </section>
+
+  <!-- 5 LIST -->
+  <section>
+    <h2>Lista de penitentes</h2>
+    <input id="inputList" placeholder="Añadir..." />
+    <button id="add">Añadir</button>
+    <button id="clear">Limpiar</button>
+    <ul id="list"></ul>
+  </section>
+
+  <!-- 6 CARDS -->
+  <section>
+    <h2>Tarjetas de pasos</h2>
+    <input id="cardTitle" placeholder="Título" />
+    <input id="cardDesc" placeholder="Descripción" />
+    <button id="createCard">Crear</button>
+    <div id="cards"></div>
+  </section>
+
+  <!-- 7 MOVER BOTÓN -->
+  <section>
+    <h2>El botón huidizo</h2>
+    <button id="moverBtn">Atrápame 🐇</button>
+  </section>
+
+  <!-- 8 TIMER -->
+  <section>
+    <h2>Temporizador</h2>
+    <p id="timer">0</p>
+  </section>
+
+  <!-- 9 RETO ALEATORIO -->
+  <section>
+    <h2>Reto aleatorio</h2>
+    <button id="random">Generar reto</button>
+    <p id="reto"></p>
+  </section>
+
+</div>
+
+<script>
+// 1
+changeText.onclick = () => {
+  title.textContent = "🕯️ Nuevo reto DOM";
+};
+
+// 3
+let c = 0;
+btnCount.onclick = () => {
+  count.textContent = ++c;
+};
+
+// 4
+toggle.onclick = () => {
+  text.style.display = text.style.display === "none" ? "block" : "none";
+};
+
+// 5
+add.onclick = () => {
+  const li = document.createElement("li");
+  li.textContent = inputList.value;
+
+  li.onclick = () => li.classList.toggle("completed");
+
+  li.ondblclick = () => li.remove();
+
+  list.appendChild(li);
+  inputList.value = "";
+};
+
+clear.onclick = () => list.innerHTML = "";
+
+// 6
+createCard.onclick = () => {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const h = document.createElement("h3");
+  h.textContent = cardTitle.value;
+
+  const p = document.createElement("p");
+  p.textContent = cardDesc.value;
+
+  card.appendChild(h);
+  card.appendChild(p);
+
+  cards.appendChild(card);
+};
+
+// 7
+moverBtn.onmouseover = () => {
+  moverBtn.style.position = "absolute";
+  moverBtn.style.top = Math.random() * 400 + "px";
+  moverBtn.style.left = Math.random() * 400 + "px";
+};
+
+// 8
+timerCount = 0;
+setInterval(() => {
+  timer.textContent = ++timerCount;
+}, 1000);
+
+// 9
+const retos = [
+  "Crear lista",
+  "Modo oscuro",
+  "Contador",
+  "Cards",
+  "Timer"
+];
+
+random.onclick = () => {
+  reto.textContent = retos[Math.floor(Math.random() * retos.length)];
+};
+
+// dark mode
+darkMode.onclick = () => {
+  document.body.classList.toggle("dark");
+};
+</script>
+
+</body>
+</html>
